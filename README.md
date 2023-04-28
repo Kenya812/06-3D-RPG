@@ -18,7 +18,7 @@ Description: Its 3D  game with a third-person perspective
 
 
 ## References
-- 
+- Blender export to Godot Engine: https://www.patreon.com/posts/blender-export-16916038
 - Blaster Kit: https://kenney.nl/assets/blaster-kit
 
 ## Future Development
