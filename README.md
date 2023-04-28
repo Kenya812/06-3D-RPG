@@ -18,7 +18,7 @@ Description: Its 3D  game with a third-person perspective
 
 
 ## References
-- Modular Terrain Pack: https://fertile-soil-productions.itch.io/modular-terrain-pack
+- 
 - Blaster Kit: https://kenney.nl/assets/blaster-kit
 
 ## Future Development
