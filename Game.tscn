@@ -1,10 +1,14 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=13 format=2]
 
 [ext_resource path="res://Player/Player.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Player/Player.gd" type="Script" id=2]
 [ext_resource path="res://Terrain.tscn" type="PackedScene" id=3]
 [ext_resource path="res://Target/Target.tscn" type="PackedScene" id=4]
 [ext_resource path="res://Player/RayCast.gd" type="Script" id=5]
+[ext_resource path="res://NPC/NPC.tscn" type="PackedScene" id=6]
+[ext_resource path="res://NPC/NPC.gd" type="Script" id=7]
+[ext_resource path="res://UI/Dialogue.gd" type="Script" id=8]
+[ext_resource path="res://UI/UI.gd" type="Script" id=9]
 
 [sub_resource type="SpatialMaterial" id=1]
 albedo_color = Color( 1, 0, 0, 1 )
@@ -19,9 +23,14 @@ material = SubResource( 1 )
 radius = 0.5
 height = 1.0
 
+[sub_resource type="SphereShape" id=3]
+radius = 0.459086
+
 [node name="Game" type="Spatial"]
 
 [node name="Player" parent="." instance=ExtResource( 1 )]
+transform = Transform( -0.770513, 0, -0.637424, 0, 1, 0, 0.637424, 0, -0.770513, 43.595, 4.512, 17.83 )
+collision_layer = 3
 script = ExtResource( 2 )
 
 [node name="Pivot" type="Position3D" parent="Player"]
@@ -60,3 +69,65 @@ transform = Transform( 0.766044, 0, -0.642788, 0, 1, 0, 0.642788, 0, 0.766044, -
 
 [node name="Target5" parent="Target_container" instance=ExtResource( 4 )]
 transform = Transform( -4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 15.3905, 7.57113, -50.0623 )
+
+[node name="NPC" parent="." instance=ExtResource( 6 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 42.5732, 0, -4.38635 )
+script = ExtResource( 7 )
+
+[node name="Area" type="Area" parent="NPC"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.720202, 0 )
+collision_layer = 2
+collision_mask = 2
+
+[node name="CollisionShape" type="CollisionShape" parent="NPC/Area"]
+transform = Transform( 10, 0, 0, 0, 10, 0, 0, 0, 10, 0, 2.55156, 0 )
+shape = SubResource( 3 )
+
+[node name="UI" type="CanvasLayer" parent="."]
+script = ExtResource( 9 )
+
+[node name="Background" type="ColorRect" parent="UI"]
+anchor_right = 1.0
+margin_bottom = 30.0
+color = Color( 0, 0, 0, 0.501961 )
+
+[node name="Score" type="Label" parent="UI"]
+margin_left = 10.0
+margin_right = 510.0
+margin_bottom = 30.0
+text = "Score:"
+valign = 1
+
+[node name="Time" type="Label" parent="UI"]
+margin_left = 512.0
+margin_right = 1014.0
+margin_bottom = 30.0
+text = "Timer: 00:00"
+align = 2
+valign = 1
+
+[node name="Timer" type="Timer" parent="UI"]
+
+[node name="Dialogue" type="Control" parent="UI"]
+visible = false
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource( 8 )
+
+[node name="Background" type="ColorRect" parent="UI/Dialogue"]
+margin_top = 570.0
+margin_right = 1024.0
+margin_bottom = 600.0
+color = Color( 0, 0, 0, 0.501961 )
+
+[node name="Text" type="RichTextLabel" parent="UI/Dialogue"]
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_top = -20.0
+margin_bottom = 10.0
+bbcode_enabled = true
+
+[connection signal="body_entered" from="NPC/Area" to="NPC" method="_on_Area_body_entered"]
+[connection signal="body_exited" from="NPC/Area" to="NPC" method="_on_Area_body_exited"]
+[connection signal="timeout" from="UI/Timer" to="UI" method="_on_Timer_timeout"]
