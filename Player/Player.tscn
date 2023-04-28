@@ -1,7 +1,8 @@
-[gd_scene load_steps=25 format=2]
+[gd_scene load_steps=26 format=2]
 
 [ext_resource path="res://Assets/skin.material" type="Material" id=1]
 [ext_resource path="res://Assets/skaterFemaleA.png" type="Texture" id=2]
+[ext_resource path="res://Assets/blasterH.glb" type="PackedScene" id=3]
 
 [sub_resource type="CapsuleShape" id=1]
 radius = 0.5
@@ -4886,6 +4887,13 @@ bones/44/bound_children = [  ]
 mesh = SubResource( 2 )
 skin = SubResource( 3 )
 material/0 = SubResource( 4 )
+
+[node name="BoneAttachment" type="BoneAttachment" parent="Root/Skeleton"]
+transform = Transform( -0.820481, 0.129469, 0.556831, 0.435149, -0.490264, 0.755177, 0.370763, 0.861903, 0.345913, -0.661355, 1.33096, 0.232201 )
+bone_name = "right_hand_thumb_1"
+
+[node name="blasterH" parent="Root/Skeleton/BoneAttachment" instance=ExtResource( 3 )]
+transform = Transform( -1.29111, 0.645911, 0.407217, 0.302213, -0.302362, 1.43779, 0.701208, 1.31961, 0.130121, 0.0807205, 0.288158, 0.0375335 )
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 anims/Attack = SubResource( 5 )

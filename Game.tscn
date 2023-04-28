@@ -1,3 +1,62 @@
-[gd_scene format=2]
+[gd_scene load_steps=8 format=2]
+
+[ext_resource path="res://Player/Player.tscn" type="PackedScene" id=1]
+[ext_resource path="res://Player/Player.gd" type="Script" id=2]
+[ext_resource path="res://Terrain.tscn" type="PackedScene" id=3]
+[ext_resource path="res://Target/Target.tscn" type="PackedScene" id=4]
+[ext_resource path="res://Player/RayCast.gd" type="Script" id=5]
+
+[sub_resource type="SpatialMaterial" id=1]
+albedo_color = Color( 1, 0, 0, 1 )
+emission_enabled = true
+emission = Color( 1, 0, 0, 1 )
+emission_energy = 4.0
+emission_operator = 0
+emission_on_uv2 = false
+
+[sub_resource type="SphereMesh" id=2]
+material = SubResource( 1 )
+radius = 0.5
+height = 1.0
 
 [node name="Game" type="Spatial"]
+
+[node name="Player" parent="." instance=ExtResource( 1 )]
+script = ExtResource( 2 )
+
+[node name="Pivot" type="Position3D" parent="Player"]
+
+[node name="Camera" type="Camera" parent="Player/Pivot"]
+transform = Transform( -1, 1.51808e-08, -8.60946e-08, 0, 0.984808, 0.173648, 8.74228e-08, 0.173648, -0.984808, 0, 5, -8 )
+
+[node name="RayCast" type="RayCast" parent="Player/Pivot"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3, 0 )
+enabled = true
+cast_to = Vector3( 0, -1, 100 )
+script = ExtResource( 5 )
+
+[node name="Reticule" type="Position3D" parent="Player/Pivot/RayCast"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 50 )
+
+[node name="MeshInstance" type="MeshInstance" parent="Player/Pivot/RayCast/Reticule"]
+mesh = SubResource( 2 )
+
+[node name="lowpoly_scene" parent="." instance=ExtResource( 3 )]
+transform = Transform( 3, 0, 0, 0, 3, 0, 0, 0, 3, 0, 0, 0 )
+
+[node name="Target_container" type="Spatial" parent="."]
+
+[node name="Target" parent="Target_container" instance=ExtResource( 4 )]
+transform = Transform( 0.939693, 0, 0.34202, 0, 1, 0, -0.34202, 0, 0.939693, -27, 4, 9 )
+
+[node name="Target2" parent="Target_container" instance=ExtResource( 4 )]
+transform = Transform( 0.939693, 0, -0.34202, 0, 1, 0, 0.34202, 0, 0.939693, -36.907, 4, -14.7803 )
+
+[node name="Target3" parent="Target_container" instance=ExtResource( 4 )]
+transform = Transform( 0.766044, 0, -0.642788, 0, 1, 0, 0.642788, 0, 0.766044, -56.36, 6.85258, -45.6049 )
+
+[node name="Target4" parent="Target_container" instance=ExtResource( 4 )]
+transform = Transform( 0.766044, 0, -0.642788, 0, 1, 0, 0.642788, 0, 0.766044, -28.8757, 4.92904, -50.0623 )
+
+[node name="Target5" parent="Target_container" instance=ExtResource( 4 )]
+transform = Transform( -4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 15.3905, 7.57113, -50.0623 )
