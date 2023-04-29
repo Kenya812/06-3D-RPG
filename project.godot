@@ -14,7 +14,7 @@ _global_script_class_icons={
 
 [application]
 
-config/name="3D Character"
+config/name="06-3D-RPG"
 run/main_scene="res://Game.tscn"
 config/icon="res://icon.png"
 
